@@ -1,5 +1,8 @@
 
 # CRUD Data Karyawan
+
+[📄 Download PDF Documentation](https://gitprint.com/parwantoawan/ba-test/blob/main/README.md)
+
 ## 🔄 Flowchart Proses CRUD Data Karyawan
 
 Flowchart berikut menggambarkan alur proses utama aplikasi dari frontend, backend, hingga database:
