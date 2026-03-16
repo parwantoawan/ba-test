@@ -1,64 +1,6 @@
 
 # CRUD Data Karyawan
 
-[📄 Download PDF Documentation](https://github.com/parwantoawan/ba-test/raw/main/documentation.pdf)
-
-## 🔄 Flowchart Proses CRUD Data Karyawan
-
-Flowchart berikut menggambarkan alur proses utama aplikasi dari frontend, backend, hingga database:
-
-![Flowchart CRUD Data Karyawan](https://mermaid.ink/img/Zmxvd2NoYXJ0IExSCiAgIFN0YXJ0KFtVc2VyIEFrc2VzIEZyb250ZW5kXSkKICAgTG9naW5QYWdlW0xvZ2luIFBhZ2VdCiAgIExvZ2luUmVxW1BPU1QgL2xvZ2luXQogICBBdXRoQ3RybFtBdXRoIENvbnRyb2xsZXJdCiAgIFVzZXJNb2RlbFtVc2VyX21vZGVsXQogICBBdXRoREJbKHVzZXJzKV0KICAgTG9naW5TdWNjZXNze0xvZ2luIEJlcmhhc2lsP30KICAgRGFzaGJvYXJkW0Rhc2hib2FyZCBQYWdlXQogICBEYXNoUmVxW0dFVCAvYXBpL2Rhc2hib2FyZC9zdGF0c10KICAgRGFzaEN0cmxbRGFzaGJvYXJkIENvbnRyb2xsZXJdCiAgIERhc2hNb2RlbFtFbXBsb3llZV9tb2RlbCwgVXNlcl9tb2RlbCwgSmFiYXRhbl9tb2RlbCwgUG9zaXRpb25fbW9kZWxdCiAgIERhc2hEQlsoZW1wbG95ZWVzLCB1c2VycywgamFiYXRhbiwgcG9zaXRpb25zKV0KICAgRW1wTGlzdFtFbXBsb3llZSBMaXN0IFBhZ2VdCiAgIEVtcExpc3RSZXFbR0VUIC9hcGkvZW1wbG95ZWVzL2xpc3RdCiAgIEVtcEN0cmxbRW1wbG95ZWUgQ29udHJvbGxlcl0KICAgRW1wTW9kZWxbRW1wbG95ZWVfbW9kZWxdCiAgIEVtcERCWyhlbXBsb3llZXMpXQogICBBZGRFbXBbQWRkIEVtcGxveWVlIEZvcm1dCiAgIEFkZEVtcFJlcVtQT1NUIC9hcGkvZW1wbG95ZWVzL2NyZWF0ZV0KICAgQWRkRW1wQ3RybFtFbXBsb3llZSBDb250cm9sbGVyXQogICBBZGRFbXBNb2RlbFtFbXBsb3llZV9tb2RlbCwgUG9zaXRpb25faGlzdG9yeV9tb2RlbF0KICAgQWRkRW1wREJbKGVtcGxveWVlcywgZW1wbG95ZWVfcG9zaXRpb25faGlzdG9yeSldCiAgIEVuZChbU2VsZXNhaV0pCgogICBTdGFydCAtLT4gTG9naW5QYWdlCiAgIExvZ2luUGFnZSAtLT4gTG9naW5SZXEKICAgTG9naW5SZXEgLS0-IEF1dGhDdHJsCiAgIEF1dGhDdHJsIC0tPiBVc2VyTW9kZWwKICAgVXNlck1vZGVsIC0tPiBBdXRoREIKICAgQXV0aERCIC0tPiBMb2dpblN1Y2Nlc3MKICAgTG9naW5TdWNjZXNzIC0tIFlhIC0tPiBEYXNoYm9hcmQKICAgTG9naW5TdWNjZXNzIC0tIFRpZGFrIC0tPiBMb2dpblBhZ2UKICAgRGFzaGJvYXJkIC0tPiBEYXNoUmVxCiAgIERhc2hSZXEgLS0-IERhc2hDdHJsCiAgIERhc2hDdHJsIC0tPiBEYXNoTW9kZWwKICAgRGFzaE1vZGVsIC0tPiBEYXNoREIKICAgRGFzaGJvYXJkIC0tPiBFbXBMaXN0CiAgIEVtcExpc3QgLS0-IEVtcExpc3RSZXEKICAgRW1wTGlzdFJlcSAtLT4gRW1wQ3RybAogICBFbXBDdHJsIC0tPiBFbXBNb2RlbAogICBFbXBNb2RlbCAtLT4gRW1wREIKICAgRW1wTGlzdCAtLT4gQWRkRW1wCiAgIEFkZEVtcCAtLT4gQWRkRW1wUmVxCiAgIEFkZEVtcFJlcSAtLT4gQWRkRW1wQ3RybAogICBBZGRFbXBDdHJsIC0tPiBBZGRFbXBNb2RlbAogICBBZGRFbXBNb2RlbCAtLT4gQWRkRW1wREIKICAgQWRkRW1wIC0tPiBFbmQ=?type=png)
-
-<!-- Mermaid source (for editing, paste into https://mermaid.live):
-flowchart LR
-   Start([User Akses Frontend])
-   LoginPage[Login Page]
-   LoginReq[POST /login]
-   AuthCtrl[Auth Controller]
-   UserModel[User_model]
-   AuthDB[(users)]
-   LoginSuccess{Login Berhasil?}
-   Dashboard[Dashboard Page]
-   DashReq[GET /api/dashboard/stats]
-   DashCtrl[Dashboard Controller]
-   DashModel[Employee_model, User_model, Jabatan_model, Position_model]
-   DashDB[(employees, users, jabatan, positions)]
-   EmpList[Employee List Page]
-   EmpListReq[GET /api/employees/list]
-   EmpCtrl[Employee Controller]
-   EmpModel[Employee_model]
-   EmpDB[(employees)]
-   AddEmp[Add Employee Form]
-   AddEmpReq[POST /api/employees/create]
-   AddEmpCtrl[Employee Controller]
-   AddEmpModel[Employee_model, Position_history_model]
-   AddEmpDB[(employees, employee_position_history)]
-   End([Selesai])
-
-   Start -->
-
-Aplikasi CRUD Data Karyawan menggunakan CodeIgniter 3, Microsoft SQL Server, dan Gentelella Admin Template, berjalan di Docker.
-
-## 🖥️ End-to-End Architecture (Frontend–Backend–Database)
-
-### Overview
-
-![End-to-End Architecture](https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgIHN1YmdyYXBoIEZyb250ZW5kCiAgICAgIEExW0xvZ2luIFBhZ2VdCiAgICAgIEEyW0Rhc2hib2FyZCBQYWdlXQogICAgICBBM1tFbXBsb3llZSBMaXN0XQogICAgICBBNFtFbXBsb3llZSBGb3JtXQogICAgICBBNVtQb3NpdGlvbiBMaXN0XQogICAgICBBNltKYWJhdGFuIExpc3RdCiAgICAgIEE3W0hpc3RvcnkgUGFnZV0KICAgICAgQTEgLS0gUE9TVCAvbG9naW4gLS0-IEIxCiAgICAgIEEyIC0tIEdFVCAvYXBpL2Rhc2hib2FyZC9zdGF0cyAtLT4gQjIKICAgICAgQTMgLS0gR0VUIC9hcGkvZW1wbG95ZWVzL2xpc3QgLS0-IEIzCiAgICAgIEE0IC0tIFBPU1QgL2FwaS9lbXBsb3llZXMvY3JlYXRlfHVwZGF0ZXxkZWxldGUgLS0-IEI0CiAgICAgIEE1IC0tIEdFVCAvYXBpL3Bvc2l0aW9ucy9saXN0IC0tPiBCNQogICAgICBBNiAtLSBHRVQgL2FwaS9qYWJhdGFuL2xpc3QgLS0-IEI2CiAgICAgIEE3IC0tIEdFVCAvYXBpL2VtcGxveWVlcy97aWR9L2hpc3RvcnkgLS0-IEI3CiAgIGVuZAogICBzdWJncmFwaCBCYWNrZW5kCiAgICAgIEIxW0F1dGggQ29udHJvbGxlcl0KICAgICAgQjJbRGFzaGJvYXJkIENvbnRyb2xsZXJdCiAgICAgIEIzW0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI0W0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI1W1Bvc2l0aW9uIENvbnRyb2xsZXJdCiAgICAgIEI2W0phYmF0YW4gQ29udHJvbGxlcl0KICAgICAgQjdbRW1wbG95ZWUgQ29udHJvbGxlcl0KICAgICAgQjEgLS0gUXVlcnkgVXNlcl9tb2RlbCAtLT4gQzEKICAgICAgQjIgLS0gUXVlcnkgRW1wbG95ZWVfbW9kZWwgJiBVc2VyX21vZGVsICYgSmFiYXRhbl9tb2RlbCAmIFBvc2l0aW9uX21vZGVsIC0tPiBDMgogICAgICBCMyAtLSBRdWVyeSBFbXBsb3llZV9tb2RlbCAtLT4gQzMKICAgICAgQjQgLS0gVXBkYXRlIEVtcGxveWVlX21vZGVsICYgUG9zaXRpb25faGlzdG9yeV9tb2RlbCAtLT4gQzQKICAgICAgQjUgLS0gUXVlcnkgUG9zaXRpb25fbW9kZWwgLS0-IEM1CiAgICAgIEI2IC0tIFF1ZXJ5IEphYmF0YW5fbW9kZWwgLS0-IEM2CiAgICAgIEI3IC0tIFF1ZXJ5IFBvc2l0aW9uX2hpc3RvcnlfbW9kZWwgLS0-IEM3CiAgIGVuZAogICBzdWJncmFwaCBEYXRhYmFzZQogICAgICBDMVsodXNlcnMpXQogICAgICBDMlsoZW1wbG95ZWVzLCB1c2VycywgamFiYXRhbiwgcG9zaXRpb25zKV0KICAgICAgQzNbKGVtcGxveWVlcyldCiAgICAgIEM0WyhlbXBsb3llZXMsIGVtcGxveWVlX3Bvc2l0aW9uX2hpc3RvcnksIHBvc2l0aW9ucyldCiAgICAgIEM1Wyhwb3NpdGlvbnMpXQogICAgICBDNlsoamFiYXRhbildCiAgICAgIEM3WyhlbXBsb3llZV9wb3NpdGlvbl9oaXN0b3J5KV0KICAgZW5k?type=png)
-
-### Penjelasan Alur
-
-- **Frontend**: Komponen utama (login, dashboard, list, form, history) melakukan request AJAX (GET/POST) ke endpoint backend.
-- **Backend**: Controller menerima request, memproses validasi, otorisasi, dan business logic, lalu berinteraksi dengan model.
-- **Model**: Model melakukan query ke database (SQL Server) untuk mengambil, menambah, mengubah, atau menghapus data.
-- **Database**: Tabel utama: `users`, `employees`, `jabatan`, `positions`, `employee_position_history`.
-
-Contoh alur:
-- User login → POST `/login` → Auth Controller → User_model → `users`
-- Lihat data karyawan → GET `/api/employees/list` → Employee Controller → Employee_model → `employees` JOIN `jabatan`
-- Tambah karyawan → POST `/api/employees/create` → Employee Controller → Employee_model/Position_history_model → `employees`, `employee_position_history`
-
----
-
 | Service  | Image                                    | Port | Description                     |
 |----------|------------------------------------------|------|---------------------------------|
 | web      | PHP 8.2 Apache (custom Dockerfile)       | 8080 | CodeIgniter 3 application       |
@@ -133,83 +75,54 @@ Contoh alur:
 
 ---
 
-## 📊 Job Position History Architecture
-
-### How It Works
+## 📁 Project Structure
 
 ```
-Employee Created → Initial position history record inserted (end_date = NULL)
-                                    ↓
-Admin Changes Position → Previous record closed (end_date = today)
-                       → New record created (end_date = NULL)
-                                    ↓
-Current Position = Record where end_date IS NULL
+├── docker/
+│   ├── Dockerfile
+│   ├── init-db.php             # DB init + positions + history seed
+│   └── start.sh
+├── application/
+│   ├── config/
+│   │   ├── autoload.php
+│   │   ├── config.php
+│   │   ├── database.php        # sqlsrv driver
+│   │   └── routes.php          # All routes incl. positions & history
+│   ├── controllers/
+│   │   ├── Auth.php
+│   │   ├── Dashboard.php       # Admin/User differentiated
+│   │   ├── Employee.php        # CRUD + history API + position tracking
+│   │   ├── Jabatan.php
+│   │   └── Position.php        # Position CRUD
+│   ├── models/
+│   │   ├── Employee_model.php  # Gender stats, simple list
+│   │   ├── User_model.php
+│   │   ├── Jabatan_model.php
+│   │   ├── Position_model.php
+│   │   └── Position_history_model.php
+│   └── views/
+│       ├── layout/
+│       │   ├── header.php      # Sidebar with Posisi & Riwayat menus
+│       │   └── footer.php
+│       ├── auth/login.php
+│       ├── dashboard/index.php # Admin vs User dashboard
+│       ├── employee/
+│       │   ├── list.php        # History modal button
+│       │   ├── form.php        # Position dropdown
+│       │   └── history.php     # History timeline page
+│       ├── jabatan/
+│       │   ├── list.php
+│       │   └── form.php
+│       └── positions/
+│           ├── list.php        # Position management
+│           └── form.php
+├── assets/
+│   ├── css/
+│   └── js/
+├── docker-compose.yml
+├── docker-compose.dev.yml
+└── README.md
 ```
-
-### Position Change Logic
-
-When an administrator updates an employee's position:
-
-1. **Close previous record:**
-   ```sql
-   UPDATE employee_position_history
-   SET end_date = CURRENT_DATE
-   WHERE employee_id = ? AND end_date IS NULL
-   ```
-
-2. **Create new record:**
-   ```sql
-   INSERT INTO employee_position_history
-   (employee_id, position_id, start_date, end_date)
-   VALUES (?, ?, ?, NULL)
-   ```
-
-### Data Rules
-
-- Each employee may have multiple position history records
-- First position is automatically logged when employee is created
-- The **latest/current position** is the record where `end_date IS NULL`
-- Position changes are tracked automatically — no manual history entry needed
-
----
-
-## 👥 User Roles & Dashboard Differentiation
-
-### Admin Dashboard
-
-| Widget | Description |
-|--------|-------------|
-| Karyawan Aktif | Count of active employees |
-| Laki-laki | Male employee count |
-| Perempuan | Female employee count |
-| Permanen | Permanent employee count |
-| Kontrak | Contract employee count |
-| Total Jabatan | Total positions count |
-| Perubahan Jabatan Terbaru | Latest 5 position changes |
-| Quick Links | Positions, History pages |
-
-### User Dashboard
-
-| Widget | Description |
-|--------|-------------|
-| Karyawan Aktif | Count of active employees |
-| Laki-laki | Male employee count |
-| Perempuan | Female employee count |
-| Permanen | Permanent employee count |
-| Kontrak | Contract employee count |
-
-User dashboard does **NOT** contain: Total Jabatan, position management widgets, latest changes table, or position/history quick links.
-
-### Permissions
-
-| Action | Administrator | User |
-|--------|:---:|:---:|
-| View employees | ✅ | ✅ |
-| Add/Edit/Delete employees | ✅ | ❌ |
-| View position history | ✅ | ✅ |
-| Change positions | ✅ | ❌ |
-| Manage positions | ✅ | ❌ |
-
 ---
 
 ## 🌐 API Endpoints
@@ -322,27 +235,107 @@ User dashboard does **NOT** contain: Total Jabatan, position management widgets,
 
 ---
 
-### Jabatan & Position CRUD
+## 🔄 Flowchart Proses CRUD Data Karyawan
 
-Struktur request/response untuk jabatan dan position mirip dengan employee, dengan field yang sesuai (`nama_jabatan`, `deskripsi`, `is_active` untuk jabatan; `name` untuk position).
+Flowchart berikut menggambarkan alur proses utama aplikasi dari frontend, backend, hingga database:
+
+![Flowchart CRUD Data Karyawan](https://mermaid.ink/img/Zmxvd2NoYXJ0IExSCiAgIFN0YXJ0KFtVc2VyIEFrc2VzIEZyb250ZW5kXSkKICAgTG9naW5QYWdlW0xvZ2luIFBhZ2VdCiAgIExvZ2luUmVxW1BPU1QgL2xvZ2luXQogICBBdXRoQ3RybFtBdXRoIENvbnRyb2xsZXJdCiAgIFVzZXJNb2RlbFtVc2VyX21vZGVsXQogICBBdXRoREJbKHVzZXJzKV0KICAgTG9naW5TdWNjZXNze0xvZ2luIEJlcmhhc2lsP30KICAgRGFzaGJvYXJkW0Rhc2hib2FyZCBQYWdlXQogICBEYXNoUmVxW0dFVCAvYXBpL2Rhc2hib2FyZC9zdGF0c10KICAgRGFzaEN0cmxbRGFzaGJvYXJkIENvbnRyb2xsZXJdCiAgIERhc2hNb2RlbFtFbXBsb3llZV9tb2RlbCwgVXNlcl9tb2RlbCwgSmFiYXRhbl9tb2RlbCwgUG9zaXRpb25fbW9kZWxdCiAgIERhc2hEQlsoZW1wbG95ZWVzLCB1c2VycywgamFiYXRhbiwgcG9zaXRpb25zKV0KICAgRW1wTGlzdFtFbXBsb3llZSBMaXN0IFBhZ2VdCiAgIEVtcExpc3RSZXFbR0VUIC9hcGkvZW1wbG95ZWVzL2xpc3RdCiAgIEVtcEN0cmxbRW1wbG95ZWUgQ29udHJvbGxlcl0KICAgRW1wTW9kZWxbRW1wbG95ZWVfbW9kZWxdCiAgIEVtcERCWyhlbXBsb3llZXMpXQogICBBZGRFbXBbQWRkIEVtcGxveWVlIEZvcm1dCiAgIEFkZEVtcFJlcVtQT1NUIC9hcGkvZW1wbG95ZWVzL2NyZWF0ZV0KICAgQWRkRW1wQ3RybFtFbXBsb3llZSBDb250cm9sbGVyXQogICBBZGRFbXBNb2RlbFtFbXBsb3llZV9tb2RlbCwgUG9zaXRpb25faGlzdG9yeV9tb2RlbF0KICAgQWRkRW1wREJbKGVtcGxveWVlcywgZW1wbG95ZWVfcG9zaXRpb25faGlzdG9yeSldCiAgIEVuZChbU2VsZXNhaV0pCgogICBTdGFydCAtLT4gTG9naW5QYWdlCiAgIExvZ2luUGFnZSAtLT4gTG9naW5SZXEKICAgTG9naW5SZXEgLS0-IEF1dGhDdHJsCiAgIEF1dGhDdHJsIC0tPiBVc2VyTW9kZWwKICAgVXNlck1vZGVsIC0tPiBBdXRoREIKICAgQXV0aERCIC0tPiBMb2dpblN1Y2Nlc3MKICAgTG9naW5TdWNjZXNzIC0tIFlhIC0tPiBEYXNoYm9hcmQKICAgTG9naW5TdWNjZXNzIC0tIFRpZGFrIC0tPiBMb2dpblBhZ2UKICAgRGFzaGJvYXJkIC0tPiBEYXNoUmVxCiAgIERhc2hSZXEgLS0-IERhc2hDdHJsCiAgIERhc2hDdHJsIC0tPiBEYXNoTW9kZWwKICAgRGFzaE1vZGVsIC0tPiBEYXNoREIKICAgRGFzaGJvYXJkIC0tPiBFbXBMaXN0CiAgIEVtcExpc3QgLS0-IEVtcExpc3RSZXEKICAgRW1wTGlzdFJlcSAtLT4gRW1wQ3RybAogICBFbXBDdHJsIC0tPiBFbXBNb2RlbAogICBFbXBNb2RlbCAtLT4gRW1wREIKICAgRW1wTGlzdCAtLT4gQWRkRW1wCiAgIEFkZEVtcCAtLT4gQWRkRW1wUmVxCiAgIEFkZEVtcFJlcSAtLT4gQWRkRW1wQ3RybAogICBBZGRFbXBDdHJsIC0tPiBBZGRFbXBNb2RlbAogICBBZGRFbXBNb2RlbCAtLT4gQWRkRW1wREIKICAgQWRkRW1wIC0tPiBFbmQ=?type=png)
+
+<!-- Mermaid source (for editing, paste into https://mermaid.live):
+flowchart LR
+   Start([User Akses Frontend])
+   LoginPage[Login Page]
+   LoginReq[POST /login]
+   AuthCtrl[Auth Controller]
+   UserModel[User_model]
+   AuthDB[(users)]
+   LoginSuccess{Login Berhasil?}
+   Dashboard[Dashboard Page]
+   DashReq[GET /api/dashboard/stats]
+   DashCtrl[Dashboard Controller]
+   DashModel[Employee_model, User_model, Jabatan_model, Position_model]
+   DashDB[(employees, users, jabatan, positions)]
+   EmpList[Employee List Page]
+   EmpListReq[GET /api/employees/list]
+   EmpCtrl[Employee Controller]
+   EmpModel[Employee_model]
+   EmpDB[(employees)]
+   AddEmp[Add Employee Form]
+   AddEmpReq[POST /api/employees/create]
+   AddEmpCtrl[Employee Controller]
+   AddEmpModel[Employee_model, Position_history_model]
+   AddEmpDB[(employees, employee_position_history)]
+   End([Selesai])
+
+   Start -->
+
+Aplikasi CRUD Data Karyawan menggunakan CodeIgniter 3, Microsoft SQL Server, dan Gentelella Admin Template, berjalan di Docker.
+
+## 🖥️ End-to-End Architecture (Frontend–Backend–Database)
+
+### Overview
+
+![End-to-End Architecture](https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgIHN1YmdyYXBoIEZyb250ZW5kCiAgICAgIEExW0xvZ2luIFBhZ2VdCiAgICAgIEEyW0Rhc2hib2FyZCBQYWdlXQogICAgICBBM1tFbXBsb3llZSBMaXN0XQogICAgICBBNFtFbXBsb3llZSBGb3JtXQogICAgICBBNVtQb3NpdGlvbiBMaXN0XQogICAgICBBNltKYWJhdGFuIExpc3RdCiAgICAgIEE3W0hpc3RvcnkgUGFnZV0KICAgICAgQTEgLS0gUE9TVCAvbG9naW4gLS0-IEIxCiAgICAgIEEyIC0tIEdFVCAvYXBpL2Rhc2hib2FyZC9zdGF0cyAtLT4gQjIKICAgICAgQTMgLS0gR0VUIC9hcGkvZW1wbG95ZWVzL2xpc3QgLS0-IEIzCiAgICAgIEE0IC0tIFBPU1QgL2FwaS9lbXBsb3llZXMvY3JlYXRlfHVwZGF0ZXxkZWxldGUgLS0-IEI0CiAgICAgIEE1IC0tIEdFVCAvYXBpL3Bvc2l0aW9ucy9saXN0IC0tPiBCNQogICAgICBBNiAtLSBHRVQgL2FwaS9qYWJhdGFuL2xpc3QgLS0-IEI2CiAgICAgIEE3IC0tIEdFVCAvYXBpL2VtcGxveWVlcy97aWR9L2hpc3RvcnkgLS0-IEI3CiAgIGVuZAogICBzdWJncmFwaCBCYWNrZW5kCiAgICAgIEIxW0F1dGggQ29udHJvbGxlcl0KICAgICAgQjJbRGFzaGJvYXJkIENvbnRyb2xsZXJdCiAgICAgIEIzW0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI0W0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI1W1Bvc2l0aW9uIENvbnRyb2xsZXJdCiAgICAgIEI2W0phYmF0YW4gQ29udHJvbGxlcl0KICAgICAgQjdbRW1wbG95ZWUgQ29udHJvbGxlcl0KICAgICAgQjEgLS0gUXVlcnkgVXNlcl9tb2RlbCAtLT4gQzEKICAgICAgQjIgLS0gUXVlcnkgRW1wbG95ZWVfbW9kZWwgJiBVc2VyX21vZGVsICYgSmFiYXRhbl9tb2RlbCAmIFBvc2l0aW9uX21vZGVsIC0tPiBDMgogICAgICBCMyAtLSBRdWVyeSBFbXBsb3llZV9tb2RlbCAtLT4gQzMKICAgICAgQjQgLS0gVXBkYXRlIEVtcGxveWVlX21vZGVsICYgUG9zaXRpb25faGlzdG9yeV9tb2RlbCAtLT4gQzQKICAgICAgQjUgLS0gUXVlcnkgUG9zaXRpb25fbW9kZWwgLS0-IEM1CiAgICAgIEI2IC0tIFF1ZXJ5IEphYmF0YW5fbW9kZWwgLS0-IEM2CiAgICAgIEI3IC0tIFF1ZXJ5IFBvc2l0aW9uX2hpc3RvcnlfbW9kZWwgLS0-IEM3CiAgIGVuZAogICBzdWJncmFwaCBEYXRhYmFzZQogICAgICBDMVsodXNlcnMpXQogICAgICBDMlsoZW1wbG95ZWVzLCB1c2VycywgamFiYXRhbiwgcG9zaXRpb25zKV0KICAgICAgQzNbKGVtcGxveWVlcyldCiAgICAgIEM0WyhlbXBsb3llZXMsIGVtcGxveWVlX3Bvc2l0aW9uX2hpc3RvcnksIHBvc2l0aW9ucyldCiAgICAgIEM1Wyhwb3NpdGlvbnMpXQogICAgICBDNlsoamFiYXRhbildCiAgICAgIEM3WyhlbXBsb3llZV9wb3NpdGlvbl9oaXN0b3J5KV0KICAgZW5k?type=png)
+
+### Penjelasan Alur
+
+- **Frontend**: Komponen utama (login, dashboard, list, form, history) melakukan request AJAX (GET/POST) ke endpoint backend.
+- **Backend**: Controller menerima request, memproses validasi, otorisasi, dan business logic, lalu berinteraksi dengan model.
+- **Model**: Model melakukan query ke database (SQL Server) untuk mengambil, menambah, mengubah, atau menghapus data.
+- **Database**: Tabel utama: `users`, `employees`, `jabatan`, `positions`, `employee_position_history`.
+
+Contoh alur:
+- User login → POST `/login` → Auth Controller → User_model → `users`
+- Lihat data karyawan → GET `/api/employees/list` → Employee Controller → Employee_model → `employees` JOIN `jabatan`
+- Tambah karyawan → POST `/api/employees/create` → Employee Controller → Employee_model/Position_history_model → `employees`, `employee_position_history`
 
 ---
 
-## 📄 Frontend Pages
+### Data Rules
 
-### History Page Usage
+- Each employee may have multiple position history records
+- First position is automatically logged when employee is created
+- The **latest/current position** is the record where `end_date IS NULL`
+- Position changes are tracked automatically — no manual history entry needed
 
-1. Navigate to **Riwayat Jabatan** in sidebar
-2. Select an employee from the dropdown
-3. View complete position timeline (newest first)
-4. Current position highlighted in green with "Current Position" badge
+---
 
-### History from Employee List
+## 👥 User Roles & Dashboard Differentiation
 
-1. Go to **Data Karyawan**
-2. Click the **history button** (clock icon) on any row
-3. Modal opens showing position timeline
-4. Click "Lihat Halaman Penuh" to go to dedicated history page
+### Admin Dashboard
+
+| Widget | Description |
+|--------|-------------|
+| Karyawan Aktif | Count of active employees |
+| Laki-laki | Male employee count |
+| Perempuan | Female employee count |
+| Permanen | Permanent employee count |
+| Kontrak | Contract employee count |
+| Total Jabatan | Total positions count |
+| Perubahan Jabatan Terbaru | Latest 5 position changes |
+| Quick Links | Positions, History pages |
+
+### User Dashboard
+
+| Widget | Description |
+|--------|-------------|
+| Karyawan Aktif | Count of active employees |
+| Laki-laki | Male employee count |
+| Perempuan | Female employee count |
+| Permanen | Permanent employee count |
+| Kontrak | Contract employee count |
+
+User dashboard does **NOT** contain: Total Jabatan, position management widgets, latest changes table, or position/history quick links.
+
+### Permissions
+
+| Action | Administrator | User |
+|--------|:---:|:---:|
+| View employees | ✅ | ✅ |
+| Add/Edit/Delete employees | ✅ | ❌ |
+| View position history | ✅ | ✅ |
+| Change positions | ✅ | ❌ |
+| Manage positions | ✅ | ❌ |
 
 ---
 
@@ -398,53 +391,3 @@ docker-compose down -v    # Stop + reset database
 docker-compose up -d      # Start fresh
 ```
 
----
-
-## 📁 Project Structure
-
-```
-├── docker/
-│   ├── Dockerfile
-│   ├── init-db.php             # DB init + positions + history seed
-│   └── start.sh
-├── application/
-│   ├── config/
-│   │   ├── autoload.php
-│   │   ├── config.php
-│   │   ├── database.php        # sqlsrv driver
-│   │   └── routes.php          # All routes incl. positions & history
-│   ├── controllers/
-│   │   ├── Auth.php
-│   │   ├── Dashboard.php       # Admin/User differentiated
-│   │   ├── Employee.php        # CRUD + history API + position tracking
-│   │   ├── Jabatan.php
-│   │   └── Position.php        # Position CRUD
-│   ├── models/
-│   │   ├── Employee_model.php  # Gender stats, simple list
-│   │   ├── User_model.php
-│   │   ├── Jabatan_model.php
-│   │   ├── Position_model.php
-│   │   └── Position_history_model.php
-│   └── views/
-│       ├── layout/
-│       │   ├── header.php      # Sidebar with Posisi & Riwayat menus
-│       │   └── footer.php
-│       ├── auth/login.php
-│       ├── dashboard/index.php # Admin vs User dashboard
-│       ├── employee/
-│       │   ├── list.php        # History modal button
-│       │   ├── form.php        # Position dropdown
-│       │   └── history.php     # History timeline page
-│       ├── jabatan/
-│       │   ├── list.php
-│       │   └── form.php
-│       └── positions/
-│           ├── list.php        # Position management
-│           └── form.php
-├── assets/
-│   ├── css/
-│   └── js/
-├── docker-compose.yml
-├── docker-compose.dev.yml
-└── README.md
-```
