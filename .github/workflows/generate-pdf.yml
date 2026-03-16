@@ -16,14 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install md-to-pdf
+        run: npm install -g md-to-pdf
 
       - name: Generate PDF Documentation
-        uses: yoshimiru/markdown-to-pdf@v1
-        with:
-          input_path: README.md
-          output_path: documentation.pdf
-          build_mermaid: true # Explicitly enable mermaid
+        run: |
+          md-to-pdf README.md --pdf-options '{"format": "A4", "margin": {"top": "20mm", "bottom": "20mm", "left": "15mm", "right": "15mm"}}' --launch-options '{"args": ["--no-sandbox"]}'
+          mv README.pdf documentation.pdf
 
       - name: Commit and Push PDF
         run: |
