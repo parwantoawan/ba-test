@@ -35,105 +35,15 @@ flowchart LR
    AddEmpDB[(employees, employee_position_history)]
    End([Selesai])
 
-   Start --> LoginPage
-   LoginPage --> LoginReq
-   LoginReq --> AuthCtrl
-   AuthCtrl --> UserModel
-   UserModel --> AuthDB
-   AuthDB --> LoginSuccess
-   LoginSuccess -- Ya --> Dashboard
-   LoginSuccess -- Tidak --> LoginPage
-   Dashboard --> DashReq
-   DashReq --> DashCtrl
-   DashCtrl --> DashModel
-   DashModel --> DashDB
-   Dashboard --> EmpList
-   EmpList --> EmpListReq
-   EmpListReq --> EmpCtrl
-   EmpCtrl --> EmpModel
-   EmpModel --> EmpDB
-   EmpList --> AddEmp
-   AddEmp --> AddEmpReq
-   AddEmpReq --> AddEmpCtrl
-   AddEmpCtrl --> AddEmpModel
-   AddEmpModel --> AddEmpDB
-   AddEmp --> End
--->
+   Start -->
 
 Aplikasi CRUD Data Karyawan menggunakan CodeIgniter 3, Microsoft SQL Server, dan Gentelella Admin Template, berjalan di Docker.
-
----
-
-
-## 🏗 Docker Architecture
-
-```
-┌─────────────────────────────────────────────┐
-│              Docker Network                  │
-│           (karyawan_network)                 │
-│                                              │
-│  ┌──────────────┐     ┌──────────────────┐  │
-│  │   web        │     │   database       │  │
-│  │ PHP 8.2      │────▶│ SQL Server 2022  │  │
-│  │ + Apache     │     │                  │  │
-│  │ + sqlsrv     │     │ Port: 1433       │  │
-│  │ Port: 8080   │     │                  │  │
-│  └──────────────┘     └──────────────────┘  │
-└─────────────────────────────────────────────┘
-```
-
----
 
 ## 🖥️ End-to-End Architecture (Frontend–Backend–Database)
 
 ### Overview
 
 ![End-to-End Architecture](https://mermaid.ink/img/Zmxvd2NoYXJ0IFRECiAgIHN1YmdyYXBoIEZyb250ZW5kCiAgICAgIEExW0xvZ2luIFBhZ2VdCiAgICAgIEEyW0Rhc2hib2FyZCBQYWdlXQogICAgICBBM1tFbXBsb3llZSBMaXN0XQogICAgICBBNFtFbXBsb3llZSBGb3JtXQogICAgICBBNVtQb3NpdGlvbiBMaXN0XQogICAgICBBNltKYWJhdGFuIExpc3RdCiAgICAgIEE3W0hpc3RvcnkgUGFnZV0KICAgICAgQTEgLS0gUE9TVCAvbG9naW4gLS0-IEIxCiAgICAgIEEyIC0tIEdFVCAvYXBpL2Rhc2hib2FyZC9zdGF0cyAtLT4gQjIKICAgICAgQTMgLS0gR0VUIC9hcGkvZW1wbG95ZWVzL2xpc3QgLS0-IEIzCiAgICAgIEE0IC0tIFBPU1QgL2FwaS9lbXBsb3llZXMvY3JlYXRlfHVwZGF0ZXxkZWxldGUgLS0-IEI0CiAgICAgIEE1IC0tIEdFVCAvYXBpL3Bvc2l0aW9ucy9saXN0IC0tPiBCNQogICAgICBBNiAtLSBHRVQgL2FwaS9qYWJhdGFuL2xpc3QgLS0-IEI2CiAgICAgIEE3IC0tIEdFVCAvYXBpL2VtcGxveWVlcy97aWR9L2hpc3RvcnkgLS0-IEI3CiAgIGVuZAogICBzdWJncmFwaCBCYWNrZW5kCiAgICAgIEIxW0F1dGggQ29udHJvbGxlcl0KICAgICAgQjJbRGFzaGJvYXJkIENvbnRyb2xsZXJdCiAgICAgIEIzW0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI0W0VtcGxveWVlIENvbnRyb2xsZXJdCiAgICAgIEI1W1Bvc2l0aW9uIENvbnRyb2xsZXJdCiAgICAgIEI2W0phYmF0YW4gQ29udHJvbGxlcl0KICAgICAgQjdbRW1wbG95ZWUgQ29udHJvbGxlcl0KICAgICAgQjEgLS0gUXVlcnkgVXNlcl9tb2RlbCAtLT4gQzEKICAgICAgQjIgLS0gUXVlcnkgRW1wbG95ZWVfbW9kZWwgJiBVc2VyX21vZGVsICYgSmFiYXRhbl9tb2RlbCAmIFBvc2l0aW9uX21vZGVsIC0tPiBDMgogICAgICBCMyAtLSBRdWVyeSBFbXBsb3llZV9tb2RlbCAtLT4gQzMKICAgICAgQjQgLS0gVXBkYXRlIEVtcGxveWVlX21vZGVsICYgUG9zaXRpb25faGlzdG9yeV9tb2RlbCAtLT4gQzQKICAgICAgQjUgLS0gUXVlcnkgUG9zaXRpb25fbW9kZWwgLS0-IEM1CiAgICAgIEI2IC0tIFF1ZXJ5IEphYmF0YW5fbW9kZWwgLS0-IEM2CiAgICAgIEI3IC0tIFF1ZXJ5IFBvc2l0aW9uX2hpc3RvcnlfbW9kZWwgLS0-IEM3CiAgIGVuZAogICBzdWJncmFwaCBEYXRhYmFzZQogICAgICBDMVsodXNlcnMpXQogICAgICBDMlsoZW1wbG95ZWVzLCB1c2VycywgamFiYXRhbiwgcG9zaXRpb25zKV0KICAgICAgQzNbKGVtcGxveWVlcyldCiAgICAgIEM0WyhlbXBsb3llZXMsIGVtcGxveWVlX3Bvc2l0aW9uX2hpc3RvcnksIHBvc2l0aW9ucyldCiAgICAgIEM1Wyhwb3NpdGlvbnMpXQogICAgICBDNlsoamFiYXRhbildCiAgICAgIEM3WyhlbXBsb3llZV9wb3NpdGlvbl9oaXN0b3J5KV0KICAgZW5k?type=png)
-
-<!-- Mermaid source (for editing, paste into https://mermaid.live):
-flowchart TD
-   subgraph Frontend
-      A1[Login Page]
-      A2[Dashboard Page]
-      A3[Employee List]
-      A4[Employee Form]
-      A5[Position List]
-      A6[Jabatan List]
-      A7[History Page]
-      A1 -- POST /login --> B1
-      A2 -- GET /api/dashboard/stats --> B2
-      A3 -- GET /api/employees/list --> B3
-      A4 -- POST /api/employees/create|update|delete --> B4
-      A5 -- GET /api/positions/list --> B5
-      A6 -- GET /api/jabatan/list --> B6
-      A7 -- GET /api/employees/{id}/history --> B7
-   end
-   subgraph Backend
-      B1[Auth Controller]
-      B2[Dashboard Controller]
-      B3[Employee Controller]
-      B4[Employee Controller]
-      B5[Position Controller]
-      B6[Jabatan Controller]
-      B7[Employee Controller]
-      B1 -- Query User_model --> C1
-      B2 -- Query Employee_model & User_model & Jabatan_model & Position_model --> C2
-      B3 -- Query Employee_model --> C3
-      B4 -- Update Employee_model & Position_history_model --> C4
-      B5 -- Query Position_model --> C5
-      B6 -- Query Jabatan_model --> C6
-      B7 -- Query Position_history_model --> C7
-   end
-   subgraph Database
-      C1[(users)]
-      C2[(employees, users, jabatan, positions)]
-      C3[(employees)]
-      C4[(employees, employee_position_history, positions)]
-      C5[(positions)]
-      C6[(jabatan)]
-      C7[(employee_position_history)]
-   end
--->
 
 ### Penjelasan Alur
 
