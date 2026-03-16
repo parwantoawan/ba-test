@@ -85,7 +85,7 @@ Aplikasi CRUD Data Karyawan menggunakan CodeIgniter 3, Microsoft SQL Server, dan
 
 ```mermaid
 flowchart TD
-   subgraph Frontend (Browser)
+   subgraph Frontend
       A1[Login Page]
       A2[Dashboard Page]
       A3[Employee List]
@@ -101,7 +101,7 @@ flowchart TD
       A6 -- GET /api/jabatan/list --> B6
       A7 -- GET /api/employees/{id}/history --> B7
    end
-   subgraph Backend (PHP/CodeIgniter)
+   subgraph Backend
       B1[Auth Controller]
       B2[Dashboard Controller]
       B3[Employee Controller]
@@ -110,14 +110,14 @@ flowchart TD
       B6[Jabatan Controller]
       B7[Employee Controller]
       B1 -- Query User_model --> C1
-      B2 -- Query Employee_model, User_model, Jabatan_model, Position_model --> C2
+      B2 -- Query Employee_model & User_model & Jabatan_model & Position_model --> C2
       B3 -- Query Employee_model --> C3
-      B4 -- Update Employee_model, Position_history_model --> C4
+      B4 -- Update Employee_model & Position_history_model --> C4
       B5 -- Query Position_model --> C5
       B6 -- Query Jabatan_model --> C6
       B7 -- Query Position_history_model --> C7
    end
-   subgraph Database (SQL Server)
+   subgraph Database
       C1[(users)]
       C2[(employees, users, jabatan, positions)]
       C3[(employees)]
