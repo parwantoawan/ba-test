@@ -129,11 +129,11 @@ class Employee extends CI_Controller
         $this->form_validation->set_data($this->input->post());
         $this->form_validation->set_rules('nip', 'NIP', 'required|max_length[20]');
         $this->form_validation->set_rules('nama', 'Nama', 'required|max_length[100]');
-        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|in_list[Laki-laki,Perempuan]');
-        $this->form_validation->set_rules('jabatan', 'Jabatan', 'required|max_length[100]');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|in_list[Laki - Laki,Perempuan]');
+        $this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|integer');
         $this->form_validation->set_rules('tanggal_aktif_jabatan', 'Tanggal Aktif Jabatan', 'required');
         $this->form_validation->set_rules('tanggal_masuk', 'Tanggal Masuk', 'required');
-        $this->form_validation->set_rules('status_karyawan', 'Status Karyawan', 'required|in_list[Tetap,Kontrak]');
+        $this->form_validation->set_rules('status_karyawan', 'Status Karyawan', 'required|in_list[Permanen,Kontrak]');
         $this->form_validation->set_rules('is_active', 'Status Aktif', 'required|in_list[active,inactive]');
 
         if ($this->form_validation->run() === FALSE) {
@@ -152,14 +152,14 @@ class Employee extends CI_Controller
             return;
         }
 
-        $jabatan = $this->input->post('jabatan', TRUE);
+        $jabatan_id = $this->input->post('jabatan_id', TRUE);
         $tanggal_aktif = $this->input->post('tanggal_aktif_jabatan', TRUE);
 
         $data = [
             'nip' => $nip,
             'nama' => $this->input->post('nama', TRUE),
             'jenis_kelamin' => $this->input->post('jenis_kelamin', TRUE),
-            'jabatan' => $jabatan,
+            'jabatan_id' => $jabatan_id,
             'tanggal_aktif_jabatan' => $tanggal_aktif,
             'tanggal_masuk' => $this->input->post('tanggal_masuk', TRUE),
             'status_karyawan' => $this->input->post('status_karyawan', TRUE),
@@ -169,15 +169,12 @@ class Employee extends CI_Controller
         $id = $this->Employee_model->create($data);
         if ($id) {
             // Create initial position history record
-            $position = $this->Position_model->get_by_name($jabatan);
-            if ($position) {
-                $this->Position_history_model->create([
-                    'employee_id' => $id,
-                    'position_id' => $position['id'],
-                    'start_date' => $tanggal_aktif,
-                    'end_date' => null
-                ]);
-            }
+            $this->Position_history_model->create([
+                'employee_id' => $id,
+                'position_id' => null, // Optional: sesuaikan jika ingin relasi ke posisi
+                'start_date' => $tanggal_aktif,
+                'end_date' => null
+            ]);
             echo json_encode(['status' => true, 'message' => 'Karyawan berhasil ditambahkan.', 'id' => $id]);
         } else {
             echo json_encode(['status' => false, 'message' => 'Gagal menambahkan karyawan.']);
@@ -203,11 +200,11 @@ class Employee extends CI_Controller
         $this->form_validation->set_data($this->input->post());
         $this->form_validation->set_rules('nip', 'NIP', 'required|max_length[20]');
         $this->form_validation->set_rules('nama', 'Nama', 'required|max_length[100]');
-        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|in_list[Laki-laki,Perempuan]');
-        $this->form_validation->set_rules('jabatan', 'Jabatan', 'required|max_length[100]');
+        $this->form_validation->set_rules('jenis_kelamin', 'Jenis Kelamin', 'required|in_list[Laki - Laki,Perempuan]');
+        $this->form_validation->set_rules('jabatan_id', 'Jabatan', 'required|integer');
         $this->form_validation->set_rules('tanggal_aktif_jabatan', 'Tanggal Aktif Jabatan', 'required');
         $this->form_validation->set_rules('tanggal_masuk', 'Tanggal Masuk', 'required');
-        $this->form_validation->set_rules('status_karyawan', 'Status Karyawan', 'required|in_list[Tetap,Kontrak]');
+        $this->form_validation->set_rules('status_karyawan', 'Status Karyawan', 'required|in_list[Permanen,Kontrak]');
         $this->form_validation->set_rules('is_active', 'Status Aktif', 'required|in_list[active,inactive]');
 
         if ($this->form_validation->run() === FALSE) {
@@ -226,15 +223,15 @@ class Employee extends CI_Controller
             return;
         }
 
-        $new_jabatan = $this->input->post('jabatan', TRUE);
+        $jabatan_id = $this->input->post('jabatan_id', TRUE);
         $new_tanggal_aktif = $this->input->post('tanggal_aktif_jabatan', TRUE);
-        $old_jabatan = $employee['jabatan'];
+        $old_jabatan_id = $employee['jabatan_id'];
 
         $data = [
             'nip' => $nip,
             'nama' => $this->input->post('nama', TRUE),
             'jenis_kelamin' => $this->input->post('jenis_kelamin', TRUE),
-            'jabatan' => $new_jabatan,
+            'jabatan_id' => $jabatan_id,
             'tanggal_aktif_jabatan' => $new_tanggal_aktif,
             'tanggal_masuk' => $this->input->post('tanggal_masuk', TRUE),
             'status_karyawan' => $this->input->post('status_karyawan', TRUE),
@@ -243,20 +240,18 @@ class Employee extends CI_Controller
 
         if ($this->Employee_model->update($id, $data)) {
             // If position changed, track it in history
-            if ($old_jabatan !== $new_jabatan) {
+            if ($old_jabatan_id != $jabatan_id) {
                 // Close current position record
                 $this->Position_history_model->close_current($id, $new_tanggal_aktif);
 
                 // Create new position history record
-                $position = $this->Position_model->get_by_name($new_jabatan);
-                if ($position) {
-                    $this->Position_history_model->create([
-                        'employee_id' => $id,
-                        'position_id' => $position['id'],
-                        'start_date' => $new_tanggal_aktif,
-                        'end_date' => null
-                    ]);
-                }
+                // Create new position history record
+                $this->Position_history_model->create([
+                    'employee_id' => $id,
+                    'position_id' => $jabatan_id,
+                    'start_date' => $new_tanggal_aktif,
+                    'end_date' => null
+                ]);
             }
             echo json_encode(['status' => true, 'message' => 'Karyawan berhasil diperbarui.']);
         } else {

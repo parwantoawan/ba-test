@@ -137,7 +137,7 @@ flowchart TD
 
 Contoh alur:
 - User login → POST `/login` → Auth Controller → User_model → `users`
-- Lihat data karyawan → GET `/api/employees/list` → Employee Controller → Employee_model → `employees`
+- Lihat data karyawan → GET `/api/employees/list` → Employee Controller → Employee_model → `employees` JOIN `jabatan`
 - Tambah karyawan → POST `/api/employees/create` → Employee Controller → Employee_model/Position_history_model → `employees`, `employee_position_history`
 
 ---
@@ -160,19 +160,20 @@ Contoh alur:
 
 ### Tables
 
+
 **employees** — Main employee data
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | INT IDENTITY | PRIMARY KEY |
-| nip | VARCHAR(20) | NOT NULL, UNIQUE |
-| nama | VARCHAR(100) | NOT NULL |
-| jenis_kelamin | VARCHAR(20) | NOT NULL |
-| jabatan | VARCHAR(100) | NOT NULL |
-| tanggal_aktif_jabatan | DATE | NOT NULL |
-| tanggal_masuk | DATE | NOT NULL |
-| status_karyawan | VARCHAR(20) | NOT NULL |
-| is_active | VARCHAR(10) | DEFAULT 'active' |
+| Column              | Type         | Constraints                                                        |
+|---------------------|--------------|--------------------------------------------------------------------|
+| id                  | INT IDENTITY | PRIMARY KEY                                                        |
+| nip                 | VARCHAR(20)  | NOT NULL, UNIQUE                                                   |
+| nama                | VARCHAR(100) | NOT NULL                                                           |
+| jenis_kelamin       | VARCHAR(20)  | NOT NULL, CHECK (jenis_kelamin IN ('Laki - Laki', 'Perempuan'))    |
+| jabatan_id          | INT          | NOT NULL, FK → jabatan(id)                                         |
+| tanggal_aktif_jabatan | DATE       | NOT NULL                                                           |
+| tanggal_masuk       | DATE         | NOT NULL                                                           |
+| status_karyawan     | VARCHAR(20)  | NOT NULL, CHECK (status_karyawan IN ('Permanen', 'Kontrak'))       |
+| is_active           | VARCHAR(10)  | DEFAULT 'active'                                                   |
 
 **users** — Authentication
 

@@ -10,12 +10,13 @@ BEGIN
         id INT IDENTITY(1,1) PRIMARY KEY,
         nip VARCHAR(20) NOT NULL UNIQUE,
         nama VARCHAR(100) NOT NULL,
-        jenis_kelamin VARCHAR(20) NOT NULL,
-        jabatan VARCHAR(100) NOT NULL,
+        jenis_kelamin VARCHAR(20) NOT NULL CHECK (jenis_kelamin IN ('Laki - Laki', 'Perempuan')),
+        jabatan_id INT NOT NULL,
         tanggal_aktif_jabatan DATE NOT NULL,
         tanggal_masuk DATE NOT NULL,
-        status_karyawan VARCHAR(20) NOT NULL,
-        is_active VARCHAR(10) NOT NULL DEFAULT 'active'
+        status_karyawan VARCHAR(20) NOT NULL CHECK (status_karyawan IN ('Permanen', 'Kontrak')),
+        is_active VARCHAR(10) NOT NULL DEFAULT 'active',
+        CONSTRAINT FK_employees_jabatan FOREIGN KEY (jabatan_id) REFERENCES jabatan(id)
     );
 END
 GO

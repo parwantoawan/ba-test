@@ -74,11 +74,12 @@ BEGIN
         nip VARCHAR(20) NOT NULL UNIQUE,
         nama VARCHAR(100) NOT NULL,
         jenis_kelamin VARCHAR(20) NOT NULL,
-        jabatan VARCHAR(100) NOT NULL,
+        jabatan_id INT NOT NULL,
         tanggal_aktif_jabatan DATE NOT NULL,
         tanggal_masuk DATE NOT NULL,
         status_karyawan VARCHAR(20) NOT NULL,
-        is_active VARCHAR(10) NOT NULL DEFAULT 'active'
+        is_active VARCHAR(10) NOT NULL DEFAULT 'active',
+        CONSTRAINT FK_employees_jabatan FOREIGN KEY (jabatan_id) REFERENCES jabatan(id)
     );
 END
 ", "Employees table");
@@ -151,18 +152,37 @@ $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
 sqlsrv_free_stmt($stmt);
 
 if ($row['cnt'] == 0) {
+    // First, get all jabatan to map names to IDs
+    $jabatanMap = [];
+    $stmt = sqlsrv_query($conn, "SELECT id, nama_jabatan FROM jabatan");
+    while ($jRow = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $jabatanMap[$jRow['nama_jabatan']] = $jRow['id'];
+    }
+    sqlsrv_free_stmt($stmt);
+
     $employees = [
-        ['NIP001', 'Lukman Hakim', 'Laki-laki', 'Manager IT', '2020-01-15', '2018-06-01', 'Tetap', 'active'],
-        ['NIP002', 'Saiful Anwar', 'Laki-laki', 'Staff Keuangan', '2021-03-10', '2019-08-15', 'Tetap', 'active'],
+        ['NIP001', 'Lukman Hakim', 'Laki - Laki', 'Manager IT', '2020-01-15', '2018-06-01', 'Permanen', 'active'],
+        ['NIP002', 'Saiful Anwar', 'Laki - Laki', 'Staff Keuangan', '2021-03-10', '2019-08-15', 'Permanen', 'active'],
         ['NIP003', 'Sinta Mei', 'Perempuan', 'Staff HRD', '2022-05-20', '2020-02-01', 'Kontrak', 'active'],
-        ['NIP004', 'Tubagus', 'Laki-laki', 'Staff Marketing', '2021-07-01', '2019-11-10', 'Tetap', 'active'],
+        ['NIP004', 'Tubagus', 'Laki - Laki', 'Staff Marketing', '2021-07-01', '2019-11-10', 'Permanen', 'active'],
         ['NIP005', 'Nana M', 'Perempuan', 'Staff Administrasi', '2023-01-05', '2021-04-20', 'Kontrak', 'active'],
     ];
-    $insertSql = "INSERT INTO employees (nip, nama, jenis_kelamin, jabatan, tanggal_aktif_jabatan, tanggal_masuk, status_karyawan, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $insertSql = "INSERT INTO employees (nip, nama, jenis_kelamin, jabatan_id, tanggal_aktif_jabatan, tanggal_masuk, status_karyawan, is_active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     foreach ($employees as $emp) {
-        $stmt = sqlsrv_query($conn, $insertSql, $emp);
+        $jabatanName = $emp[3];
+        $jabatanId = isset($jabatanMap[$jabatanName]) ? $jabatanMap[$jabatanName] : null;
+        
+        if ($jabatanId === null) {
+            echo "Warning: Jabatan '$jabatanName' not found for employee {$emp[1]}, skipping.\n";
+            continue;
+        }
+
+        $params = [$emp[0], $emp[1], $emp[2], $jabatanId, $emp[4], $emp[5], $emp[6], $emp[7]];
+        $stmt = sqlsrv_query($conn, $insertSql, $params);
         if ($stmt === false) {
             echo "Error inserting employee {$emp[1]}\n";
+            print_r(sqlsrv_errors());
         } else {
             echo "Inserted employee: {$emp[1]}\n";
             sqlsrv_free_stmt($stmt);
@@ -264,7 +284,7 @@ sqlsrv_free_stmt($stmt);
 if ($row['cnt'] == 0) {
     echo "\n--- Generating position history for existing employees ---\n";
     // Get all employees
-    $stmt = sqlsrv_query($conn, "SELECT id, jabatan, tanggal_aktif_jabatan FROM employees");
+    $stmt = sqlsrv_query($conn, "SELECT id, jabatan_id, tanggal_aktif_jabatan FROM employees");
     $empList = [];
     while ($r = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
         $empList[] = $r;
@@ -272,27 +292,17 @@ if ($row['cnt'] == 0) {
     sqlsrv_free_stmt($stmt);
 
     foreach ($empList as $emp) {
-        // Find matching position_id
-        $params = [$emp['jabatan']];
-        $stmt = sqlsrv_query($conn, "SELECT id FROM positions WHERE name = ?", $params);
-        $posRow = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-        sqlsrv_free_stmt($stmt);
-
-        if ($posRow) {
-            $histParams = [$emp['id'], $posRow['id'], $emp['tanggal_aktif_jabatan']];
-            $stmt = sqlsrv_query(
-                $conn,
-                "INSERT INTO employee_position_history (employee_id, position_id, start_date, end_date, created_at) VALUES (?, ?, ?, NULL, GETDATE())",
-                $histParams
-            );
-            if ($stmt === false) {
-                echo "Error creating history for employee ID {$emp['id']}\n";
-            } else {
-                echo "Created history for employee ID {$emp['id']} → position ID {$posRow['id']}\n";
-                sqlsrv_free_stmt($stmt);
-            }
+        $histParams = [$emp['id'], $emp['jabatan_id'], $emp['tanggal_aktif_jabatan']];
+        $stmt = sqlsrv_query(
+            $conn,
+            "INSERT INTO employee_position_history (employee_id, position_id, start_date, end_date, created_at) VALUES (?, ?, ?, NULL, GETDATE())",
+            $histParams
+        );
+        if ($stmt === false) {
+            echo "Error creating history for employee ID {$emp['id']}\n";
         } else {
-            echo "Warning: No matching position found for '{$emp['jabatan']}'\n";
+            echo "Created history for employee ID {$emp['id']} → position ID {$emp['jabatan_id']}\n";
+            sqlsrv_free_stmt($stmt);
         }
     }
 } else {

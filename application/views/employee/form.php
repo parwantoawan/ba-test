@@ -42,7 +42,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" required>
                                     <option value="">-- Pilih --</option>
-                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Laki - Laki">Laki - Laki</option>
                                     <option value="Perempuan">Perempuan</option>
                                 </select>
                                 <span class="help-block text-danger" id="error_jenis_kelamin"></span>
@@ -50,26 +50,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3" for="jabatan">Jabatan <span
+                            <label class="control-label col-md-3 col-sm-3" for="jabatan_id">Jabatan <span
                                     class="required">*</span></label>
                             <div class="col-md-6 col-sm-6">
-                                <select id="jabatan" name="jabatan" class="form-control" required>
+                                <select id="jabatan_id" name="jabatan_id" class="form-control" required>
                                     <option value="">-- Pilih Jabatan --</option>
-                                    <?php if (isset($position_list)): ?>
-                                        <?php foreach ($position_list as $pos): ?>
-                                            <option value="<?= htmlspecialchars($pos['name']) ?>">
-                                                <?= htmlspecialchars($pos['name']) ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    <?php elseif (isset($jabatan_list)): ?>
+                                    <?php if (isset($jabatan_list)): ?>
                                         <?php foreach ($jabatan_list as $jab): ?>
-                                            <option value="<?= htmlspecialchars($jab['nama_jabatan']) ?>">
+                                            <option value="<?= (int)$jab['id'] ?>">
                                                 <?= htmlspecialchars($jab['nama_jabatan']) ?>
                                             </option>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </select>
-                                <span class="help-block text-danger" id="error_jabatan"></span>
+                                <span class="help-block text-danger" id="error_jabatan_id"></span>
                             </div>
                         </div>
 
@@ -99,7 +93,7 @@
                             <div class="col-md-6 col-sm-6">
                                 <select id="status_karyawan" name="status_karyawan" class="form-control" required>
                                     <option value="">-- Pilih --</option>
-                                    <option value="Tetap">Tetap</option>
+                                    <option value="Permanen">Permanen</option>
                                     <option value="Kontrak">Kontrak</option>
                                 </select>
                                 <span class="help-block text-danger" id="error_status_karyawan"></span>
@@ -155,7 +149,7 @@
 
             // Client-side validation
             var valid = true;
-            var fields = ['nip', 'nama', 'jenis_kelamin', 'jabatan', 'tanggal_aktif_jabatan', 'tanggal_masuk', 'status_karyawan', 'is_active'];
+            var fields = ['nip', 'nama', 'jenis_kelamin', 'jabatan_id', 'tanggal_aktif_jabatan', 'tanggal_masuk', 'status_karyawan', 'is_active'];
 
             $.each(fields, function (i, field) {
                 var val = $('#' + field).val();
@@ -231,7 +225,7 @@
                     $('#nip').val(emp.nip);
                     $('#nama').val(emp.nama);
                     $('#jenis_kelamin').val(emp.jenis_kelamin);
-                    $('#jabatan').val(emp.jabatan);
+                    $('#jabatan_id').val(emp.jabatan_id);
                     // Format date for input[type=date]
                     $('#tanggal_aktif_jabatan').val(formatDateForInput(emp.tanggal_aktif_jabatan));
                     $('#tanggal_masuk').val(formatDateForInput(emp.tanggal_masuk));

@@ -16,22 +16,25 @@ class Employee_model extends CI_Model
      */
     public function get_all($limit = 10, $offset = 0, $search = '', $sort_by = 'id', $sort_dir = 'ASC')
     {
-        $allowed_sort = ['id', 'nip', 'nama', 'jabatan', 'status_karyawan', 'tanggal_masuk'];
+        $allowed_sort = ['id', 'nip', 'nama', 'nama_jabatan', 'status_karyawan', 'tanggal_masuk'];
         if (!in_array($sort_by, $allowed_sort)) {
             $sort_by = 'id';
         }
         $sort_dir = strtoupper($sort_dir) === 'DESC' ? 'DESC' : 'ASC';
 
+        $this->db->select('employees.*, jabatan.nama_jabatan as jabatan');
+        $this->db->join('jabatan', 'employees.jabatan_id = jabatan.id', 'left');
+
         if (!empty($search)) {
             $this->db->group_start();
-            $this->db->like('nip', $search);
-            $this->db->or_like('nama', $search);
-            $this->db->or_like('jabatan', $search);
-            $this->db->or_like('status_karyawan', $search);
+            $this->db->like('employees.nip', $search);
+            $this->db->or_like('employees.nama', $search);
+            $this->db->or_like('jabatan.nama_jabatan', $search);
+            $this->db->or_like('employees.status_karyawan', $search);
             $this->db->group_end();
         }
 
-        $this->db->order_by($sort_by, $sort_dir);
+        $this->db->order_by($sort_by === 'nama_jabatan' ? 'jabatan.nama_jabatan' : 'employees.'.$sort_by, $sort_dir);
         $this->db->limit($limit, $offset);
         return $this->db->get($this->table)->result_array();
     }
@@ -52,15 +55,17 @@ class Employee_model extends CI_Model
      */
     public function count_all($search = '')
     {
+        $this->db->from($this->table);
+        $this->db->join('jabatan', 'employees.jabatan_id = jabatan.id', 'left');
         if (!empty($search)) {
             $this->db->group_start();
-            $this->db->like('nip', $search);
-            $this->db->or_like('nama', $search);
-            $this->db->or_like('jabatan', $search);
-            $this->db->or_like('status_karyawan', $search);
+            $this->db->like('employees.nip', $search);
+            $this->db->or_like('employees.nama', $search);
+            $this->db->or_like('jabatan.nama_jabatan', $search);
+            $this->db->or_like('employees.status_karyawan', $search);
             $this->db->group_end();
         }
-        return $this->db->count_all_results($this->table);
+        return $this->db->count_all_results();
     }
 
     /**
@@ -68,7 +73,10 @@ class Employee_model extends CI_Model
      */
     public function get_by_id($id)
     {
-        return $this->db->get_where($this->table, ['id' => $id])->row_array();
+        $this->db->select('employees.*, jabatan.nama_jabatan as jabatan');
+        $this->db->join('jabatan', 'employees.jabatan_id = jabatan.id', 'left');
+        $this->db->where('employees.id', $id);
+        return $this->db->get($this->table)->row_array();
     }
 
     /**
@@ -126,13 +134,13 @@ class Employee_model extends CI_Model
         $this->db->where('is_active', 'inactive');
         $inactive = $this->db->count_all_results($this->table);
 
-        $this->db->where('status_karyawan', 'Tetap');
+        $this->db->where('status_karyawan', 'Permanen');
         $tetap = $this->db->count_all_results($this->table);
 
         $this->db->where('status_karyawan', 'Kontrak');
         $kontrak = $this->db->count_all_results($this->table);
 
-        $this->db->where('jenis_kelamin', 'Laki-laki');
+        $this->db->where('jenis_kelamin', 'Laki - Laki');
         $laki = $this->db->count_all_results($this->table);
 
         $this->db->where('jenis_kelamin', 'Perempuan');
