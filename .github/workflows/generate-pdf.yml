@@ -18,14 +18,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Generate PDF Documentation
+        uses: yoshimiru/markdown-to-pdf@v1
         with:
-          node-version: '18'
-
-      - name: Convert Markdown to PDF
-        run: |
-          npx mermaid-md-to-pdf README.md documentation.pdf
+          input_path: README.md
+          output_path: documentation.pdf
+          build_mermaid: true # Explicitly enable mermaid
 
       - name: Commit and Push PDF
         run: |
