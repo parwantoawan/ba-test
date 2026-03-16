@@ -1,7 +1,7 @@
 
 # CRUD Data Karyawan
 
-[📄 Download PDF Documentation](https://gitprint.com/parwantoawan/ba-test/blob/main/README.md)
+[📄 Download PDF Documentation](documentation.pdf)
 
 ## 🔄 Flowchart Proses CRUD Data Karyawan
 
