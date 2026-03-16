@@ -1,0 +1,87 @@
+/* Custom App Styles */
+
+/* Smooth transitions */
+a,
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Better table responsiveness */
+@media (max-width: 767px) {
+
+    .table-responsive>.table>thead>tr>th,
+    .table-responsive>.table>tbody>tr>td {
+        white-space: nowrap;
+    }
+}
+
+/* Loading spinner */
+.fa-spinner {
+    color: #337AB7;
+}
+
+/* Badge improvements */
+.label {
+    font-weight: 500;
+    padding: 3px 8px;
+    font-size: 11px;
+    border-radius: 3px;
+}
+
+/* Fix pagination alignment */
+.pagination {
+    margin: 5px 0;
+}
+
+/* Top nav dropdown fix */
+.dropdown-menu.dropdown-usermenu {
+    right: 0;
+    left: auto;
+    min-width: 180px;
+}
+
+.dropdown-usermenu .badge {
+    font-size: 10px;
+}
+
+/* Improve form validation error display */
+.help-block {
+    margin-bottom: 0;
+    margin-top: 3px;
+    font-size: 12px;
+}
+
+.has-error .form-control {
+    border-color: #E74C3C;
+}
+
+/* Stats tiles mobile fix */
+@media (max-width: 767px) {
+    .tile_count .tile_stats_count {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+}
+
+/* Better scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Add breathing room below top nav for content area */
+.right_col[role="main"] {
+    padding-top: 5px !important;
+}
